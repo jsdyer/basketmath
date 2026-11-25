@@ -1,16 +1,23 @@
 {
-  "id": "coolcode-tool-template",
-  "title": "CoolCode Tool Starter",
-  "description": "A browser-only example that trims lines and removes exact duplicates.",
-  "category": "security",
-  "tags": ["text", "lines", "duplicates"],
-  "icon": "scan-search",
-  "url": "/coolcode-tool-template/",
-  "source": "https://github.com/jsdyer/coolcode-tool-template",
+  "id": "basketmath",
+  "title": "Basket Math",
+  "description": "Compare package sizes, unit prices and multi-buy offers for the amount you need.",
+  "category": "money",
+  "tags": [
+    "unit price",
+    "groceries",
+    "shopping",
+    "coupons",
+    "multipacks",
+    "calculator"
+  ],
+  "icon": "shopping-basket",
+  "url": "/basketmath/",
+  "source": "https://github.com/jsdyer/basketmath",
   "hosting": "project",
   "access": "browser",
   "data_info": {
     "mode": "local",
-    "detail": "The browser reads the text you paste and compares its lines."
+    "detail": "Your entered prices, pack sizes, promotion rules and tax assumptions are calculated privately in the browser."
   }
 }

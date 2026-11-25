@@ -1,34 +1,34 @@
 <!doctype html>
-<html lang="en-CA">
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="{{DESCRIPTION}}">
-  <title>{{TITLE}} · CoolCode</title>
-  <link rel="stylesheet" href="./style.css">
-  <script type="module" src="./app.mjs"></script>
-  {{VISIT_COUNTER}}
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Compare grocery unit prices and multi-buy deals · Basket Math · CoolCode</title>
+<meta name="description" content="{{DESCRIPTION}}">
+<meta name="theme-color" content="#113e3c"><link rel="stylesheet" href="./style.css">
 </head>
-<body data-tool-id="{{TOOL_ID}}">
-  <a class="skip" href="#main">Skip to content</a>
-  <header><a href="https://coolcode.ca/">← CoolCode.ca</a><a href="{{SOURCE_URL}}">Source &amp; instructions ↗</a></header>
-  <main id="main">
-    <p class="eyebrow">Browser tool starter</p>
-    <h1>{{TITLE}}</h1>
-    <p class="intro">{{DESCRIPTION}}</p>
-    <section aria-labelledby="example-title">
-      <h2 id="example-title">Clean a list</h2>
-      <p>Trim spaces, skip blank lines and remove exact duplicates. Capitalization stays distinct.</p>
-      <div class="panels">
-        <div><label for="input">Your lines</label><textarea id="input" rows="10" maxlength="100000" spellcheck="false" placeholder="Paste one item per line"></textarea></div>
-        <div><label for="output">Cleaned lines</label><textarea id="output" rows="10" readonly spellcheck="false"></textarea></div>
-      </div>
-      <div class="actions"><button id="sample" type="button">Load example</button><button id="clear" type="button">Clear</button><button id="copy" type="button" hidden>Copy result</button></div>
-      <p id="status" role="status" aria-live="polite">Paste a list to begin.</p>
-      <noscript><p>This tool needs JavaScript to process your text. The source is available above.</p></noscript>
-    </section>
-    <aside aria-label="Privacy"><strong>Stays on your device.</strong> The browser processes your text in this tab. Reloading clears it.</aside>
-  </main>
-  <footer>Part of <a href="https://coolcode.ca/">the CoolCode collection</a>. {{ISSUE_LINK}}</footer>
-</body>
-</html>
+<body data-tool="{{TOOL_ID}}">
+<header><a href="https://coolcode.ca/" class="brand">CoolCode</a><span>Everyday comparisons</span><a href="{{SOURCE_URL}}">Source & guide</a></header>
+<main>
+<section class="intro"><div><p class="eyebrow">A better buy starts with the whole order</p><h1>{{TITLE}}</h1><p class="lead">Compare pack sizes and promotions for the amount you actually need.</p></div><div class="privacy"><strong>Your prices stay here.</strong><p>No account, store lookup or upload. Save only when you choose.</p></div></section>
+<div class="notice" id="sample-notice">The starting prices are invented examples. Replace them with prices from your shop.</div>
+<section class="goal panel" aria-labelledby="goal-title"><div class="section-head"><div><p class="eyebrow">Your shopping target</p><h2 id="goal-title">How much do you need?</h2></div><p>Compare alternatives for one product at a time.</p></div>
+<div class="goal-grid">
+<label>Amount needed<input id="need-quantity" inputmode="decimal" maxlength="24" autocomplete="off"></label>
+<label>Unit<select id="need-unit"></select></label>
+<label>Estimated tax (%)<input id="tax" inputmode="decimal" maxlength="12" autocomplete="off"></label>
+<label>Calculate tax<select id="tax-basis"><option value="after">After coupons</option><option value="before">Before coupons</option></select></label>
+</div><label class="check"><input id="extra" type="checkbox">Try extra packs to unlock a lower checkout total</label>
+<label class="check"><input id="take-free" type="checkbox">Include additional free BOGO packs at the same total</label>
+<p class="hint">Enter the rate you want to estimate. Product tax, coupon eligibility, deposits and store rounding can vary; this does not determine the tax legally payable.</p>
+<p id="goal-error" class="error" role="status"></p></section>
+<section aria-labelledby="options-title"><div class="section-head options-head"><div><p class="eyebrow">Shelf prices, made comparable</p><h2 id="options-title">Your options</h2></div><button id="add" class="primary" type="button">Add an option</button></div><div id="options" class="options-grid"></div></section>
+<section class="panel results" aria-labelledby="results-title"><div class="section-head"><div><p class="eyebrow">Enough for your target</p><h2 id="results-title">Compare the whole purchase</h2></div><span id="result-count" class="count"></span></div>
+<p class="hint">Lowest unit price can mean buying more. The checkout total includes the quantity, promotion, coupon and tax assumptions above.</p>
+<div id="results" aria-live="polite" aria-atomic="true"></div></section>
+<section class="panel saved" aria-labelledby="save-title"><h2 id="save-title">Keep your comparison</h2><p>Nothing is saved automatically. An exported JSON file preserves your inputs and can be reopened here.</p>
+<div class="actions"><button id="save" type="button">Save on this device</button><button id="load" type="button">Load saved</button><button id="forget" type="button">Forget saved</button><button id="export" type="button">Export JSON</button><label class="file-button">Import JSON<input id="import" type="file" accept=".json,application/json"></label><button id="sample" type="button">Load example</button><button id="blank" type="button">Start blank</button></div><p id="storage-status" role="status" class="hint"></p></section>
+<details class="panel"><summary>How the calculation treats promotions</summary><div class="explanation"><p><strong>Regular price:</strong> each retail pack costs the price you entered. A multipack is one retail pack; enter its inner-unit count and the contents of each inner unit.</p><p><strong>X packs for a total:</strong> complete groups receive the bundle total. Leftover packs cost the regular price. <strong>Each when buying X+:</strong> every pack receives the qualifying per-pack price once the threshold is met.</p><p><strong>Buy X, get Y free:</strong> complete groups contain X paid packs and Y free packs. Add the free packs to the cart; they count toward your target. Any incomplete group charges for up to X packs. A note shows extra free packs available at the same outlay.</p><p><strong>Coupons:</strong> per-pack coupons apply to paid packs (all packs in a priced bundle, excluding free BOGO packs). A purchase coupon applies once to this alternative's purchase. Per-pack coupons stop at each pack's price; complete bundles cap their combined coupons at the bundle price. Unused coupon value cannot reduce other packs. These rules assume coupons can be combined with the selected offer. Limits, member pricing and mixed-product offers are not inferred.</p><p><strong>Rounding and units:</strong> entered prices use exact cents; conversions and promotion math use exact fractions. Estimated tax is rounded half-up once on the option's total. Unit prices are displayed to four decimal places and ranked using unrounded values. Weight ounces are avoirdupois; they are not fluid ounces. Weight and volume cannot be converted without a density.</p><p>Extra quantity is not automatically waste. The comparison assumes you can use everything bought; consider shelf life, freezer space and whether you would buy it without the offer.</p></div></details>
+</main>
+<footer><p>A private calculator for your own prices. All amounts use the same currency; there is no currency conversion.</p><nav><a href="https://coolcode.ca/">More tools</a><a href="{{SOURCE_URL}}">Code & instructions</a>{{ISSUE_LINK}}</nav></footer>
+<script type="module" src="./app.mjs"></script>{{VISIT_COUNTER}}
+</body></html>
