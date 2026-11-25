@@ -7,7 +7,7 @@ import os
 import shutil
 import tempfile
 import threading
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import expect, sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 class QuietHandler(SimpleHTTPRequestHandler):
@@ -66,11 +66,12 @@ def main():
                 exported=json.loads(Path(download_info.value.path()).read_text())
                 assert len(exported['options'])==3
                 page.locator('#import').set_input_files({'name':'bad.json','mimeType':'application/json','buffer':b'{}'})
-                assert 'Import failed' in page.locator('#storage-status').inner_text()
+                expect(page.locator('#storage-status')).to_contain_text('Import failed')
                 assert page.locator('[data-option]').count()==3
                 page.locator('#blank').click()
                 page.locator('#import').set_input_files({'name':'comparison.json','mimeType':'application/json','buffer':json.dumps(exported).encode()})
-                assert page.locator('[data-option]').count()==3
+                expect(page.locator('#storage-status')).to_contain_text('Imported 3 options.')
+                expect(page.locator('[data-option]')).to_have_count(3)
                 page.locator('#forget').click()
                 assert page.evaluate('localStorage.length')==0
                 page.locator('#sample').click()
