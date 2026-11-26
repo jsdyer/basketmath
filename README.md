@@ -4,6 +4,7 @@ A private browser calculator for comparing grocery pack sizes and promotions for
 
 <!-- coolcode:guide -->
 Compare two sizes of the same product using your own shelf prices. Basket Math calculates whole packs, checkout cost, unit price and extra quantity, including complete-bundle offers, qualifying per-pack prices and buy-X-get-Y-free deals. Lowest unit price can require a larger purchase. Enter coupon and tax assumptions explicitly; save or export only when you choose. The starting prices are invented examples, not live store prices.
+You can also transcribe actual receipts into a private dated price/package ledger, compare compatible unit prices over time, and export/import the same history in Basket Math or Label Compare. History is saved only on request.
 <!-- /coolcode:guide -->
 
 ## Use it
@@ -70,3 +71,9 @@ GitHub Actions uses Ubuntu 24.04's Google Chrome, checks arithmetic/build/browse
 Follow the central [tool lifecycle](https://github.com/jsdyer/jsdyer.github.io/blob/main/docs/tool-lifecycle.md) for catalogue/README, repository accounting, generated Worker IDs, schedule inventory and sitemap. The generated Worker registration is independent of whether this app has a public collector. Shared issue reports and visitor counts need its ID registered in the deployed Worker.
 
 MIT licensed. Part of [CoolCode](https://coolcode.ca/).
+
+## Receipt-backed price and package history
+
+Use the new history form to transcribe actual purchase records: comparison group, optional barcode, date, store, package quantity, purchased pack count, total paid, tax basis and optional evidence/promotion reference. Confirm the entry came from an actual receipt. No receipt images or personal payment data are uploaded. The tool normalizes compatible mass/volume/count units and compares the earliest/latest observations within the same group and tax basis. Smaller packages are labelled as recorded observations, not proof of a manufacturer-wide change; flavours, formats, stores and promotions can differ. Zero-price records do not produce misleading percentage increases.
+
+History is retained only on explicit Save, using `coolcode:basketmath:receipt-history:v1`. Load, remove, clear, export and import are separate actions; removal from the current session does not overwrite stored history until saved. The JSON schema `coolcode-receipt-history-v1` is interoperable between Basket Math and Label Compare, validates up to 5,000 records and merges by record ID. This local history requires no API, key, schedule or Worker change.

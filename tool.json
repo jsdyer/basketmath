@@ -18,6 +18,6 @@
   "access": "browser",
   "data_info": {
     "mode": "local",
-    "detail": "Your entered prices, pack sizes, promotion rules and tax assumptions are calculated privately in the browser."
+    "detail": "Your entered prices, pack sizes, promotion rules and tax assumptions are calculated privately in the browser. Optional private receipt history compares dated package quantities and actual prices."
   }
 }
