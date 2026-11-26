@@ -99,6 +99,14 @@ def main():
                 page.screenshot(path=str(screenshots/'mobile.png'),full_page=True)
                 assert not errors, errors
                 assert all(url.startswith(f'http://127.0.0.1:{server.server_port}/') or url.startswith('blob:') for url in requests), requests
+                # Exercise the direct search landing page in a fresh browser context.
+                case_page = browser.new_page(viewport={'width': 390, 'height': 844})
+                case_page.route('https://**/*', lambda route: route.abort())
+                case_page.goto(f'http://127.0.0.1:{server.server_port}/basketmath/buy-two-get-one-free.html')
+                case_page.wait_for_function("() => {const q=s=>document.querySelector(s);return q('#need-quantity').value==='1.2' && q('[data-result=\"1\"] .total').textContent.includes('6.00');}")
+                assert case_page.locator('link[rel="canonical"]').get_attribute('href') == 'https://coolcode.ca/basketmath/buy-two-get-one-free.html'
+                assert case_page.locator('h1').inner_text() in case_page.title()
+                assert case_page.evaluate('document.documentElement.scrollWidth <= window.innerWidth')
                 browser.close()
             print('Browser checks passed: exact totals, promotions, stale-result removal, safe labels, private save/import/export, extra options and mobile layout')
         finally: server.shutdown()
