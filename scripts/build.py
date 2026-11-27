@@ -8,6 +8,7 @@ import shutil
 import tempfile
 from urllib.parse import urlsplit
 
+from household_pages import write_household_pages
 from search_metadata import add_search_metadata
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -84,7 +85,10 @@ def build(root=ROOT):
         case_page = case_page.replace('content="' + escape(tool["description"], quote=True) + '"', 'content="' + escape(case["description"], quote=True) + '"', 1)
         case_page = case_page.replace("<body ", '<body data-use-case="' + escape(case["slug"], quote=True) + '" ', 1)
         case_links = '<p class="case-description">' + escape(case["description"]) + '</p><p class="task-links"><a href="#need-quantity">Compare package prices</a><a href="./">Open ' + escape(tool["title"]) + '</a></p>'
+        household_links = write_household_pages(stage, tool, reporting if on_coolcode else {})
         case_page = re.sub(r'<p class="task-links" data-task-links>.*?</p>', lambda _: case_links, case_page, count=1)
+        case_page = case_page.replace('<!-- household-comparisons -->', '<nav class="task-links" aria-label="Household calculators">'+household_links+'</nav>')
+        page = page.replace('<!-- household-comparisons -->', '<nav class="task-links" aria-label="Household calculators">'+household_links+'</nav>')
         (stage / filename).write_text(add_search_metadata(case_page, case_tool), encoding="utf-8")
         page = add_search_metadata(page, tool)
         index.write_text(page, encoding="utf-8")

@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "laundry-cost-per-load",
+    "title": "Laundry Detergent Cost per Load",
+    "description": "Compare detergent by what it costs to wash one load and what you will pay for enough whole packages. Enter the dose you actually use for each product.",
+    "use": "load",
+    "target": "30",
+    "units": ["mL","L","g","kg","each"],
+    "price_label": "Price per package ($)",
+    "dose_hint": "Use the dose for the same size of wash in both options. For pods or sheets, choose pieces and enter the number used per load.",
+    "example": "For 30 loads, one $8.40 bottle holding 1.2 L at 40 mL per wash covers the target at $0.28 per load. The $5 concentrate holds 600 mL and uses 25 mL per wash. It costs about $0.21 per load, but you need two bottles and pay $10 at checkout.",
+    "options": [
+      {"name": "Regular liquid", "price": "8.40", "size": "1.2", "unit": "L", "dose": "40"},
+      {"name": "Concentrated liquid", "price": "5.00", "size": "600", "unit": "mL", "dose": "25"}
+    ]
+  },
+  {
+    "slug": "pet-food-cost-per-day",
+    "title": "Pet Food Cost per Day",
+    "description": "Compare the cost of the daily amount you already feed with the cost of buying enough whole bags for a chosen number of days.",
+    "use": "day",
+    "target": "30",
+    "units": ["g","kg","oz","lb"],
+    "price_label": "Price per bag ($)",
+    "dose_hint": "Enter the grams you already use for each food, including the full daily total if you feed several meals. The calculator uses your amounts and does not recommend a portion.",
+    "example": "For 30 days at an illustrative 100 g per day, a 3 kg bag at $18 covers the month at $0.60 per day. A 2,000 g bag at $10 costs $0.50 per day, but you need two bags up front. You spend $20 and have 1 kg left after day 30.",
+    "options": [
+      {"name": "3 kg bag", "price": "18.00", "size": "3", "unit": "kg", "dose": "100"},
+      {"name": "2,000 g bag", "price": "10.00", "size": "2000", "unit": "g", "dose": "100"}
+    ]
+  }
+]

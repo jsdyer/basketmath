@@ -107,6 +107,34 @@ def main():
                 assert case_page.locator('link[rel="canonical"]').get_attribute('href') == 'https://coolcode.ca/basketmath/buy-two-get-one-free.html'
                 assert case_page.locator('h1').inner_text() in case_page.title()
                 assert case_page.evaluate('document.documentElement.scrollWidth <= window.innerWidth')
+                # The fictional summary is available without JS. Interactive results follow actual doses.
+                for slug, heading, value in [
+                    ('laundry-cost-per-load', 'Laundry Detergent Cost per Load', '$8.40'),
+                    ('pet-food-cost-per-day', 'Pet Food Cost per Day', '$18.00'),
+                ]:
+                    url = f'http://127.0.0.1:{server.server_port}/basketmath/{slug}.html'
+                    case_page.goto(url)
+                    expect(case_page.get_by_role('heading', level=1)).to_have_text(heading)
+                    expect(case_page.locator('output').first).to_contain_text(value)
+                    assert case_page.locator('link[rel="canonical"]').get_attribute('href') == f'https://coolcode.ca/basketmath/{slug}.html'
+                    assert case_page.evaluate('document.documentElement.scrollWidth <= innerWidth')
+                    if slug == 'laundry-cost-per-load':
+                        option = case_page.locator('fieldset').first
+                        option.locator('[name=unit]').select_option('each')
+                        option.locator('[name=size]').fill('24')
+                        option.locator('[name=dose]').fill('2')
+                        expect(option.locator('output')).to_contain_text('$25.20 at checkout')
+                        expect(option.locator('[data-dose-unit]')).to_have_text('pieces per load')
+                        option.locator('[name=dose]').fill('0')
+                        expect(option.locator('output')).to_contain_text('greater than zero')
+                        case_page.get_by_role('button', name='Reset example').click()
+                        expect(option.locator('output')).to_contain_text('$8.40 at checkout')
+                    static = browser.new_page(java_script_enabled=False, viewport={'width':320, 'height':720})
+                    static.goto(url)
+                    expect(static.get_by_role('heading',name='Worked example with invented prices')).to_be_visible()
+                    assert static.locator('a[href="./"]').count() >= 1
+                    assert static.evaluate('document.documentElement.scrollWidth <= innerWidth')
+                    static.close()
                 browser.close()
             print('Browser checks passed: exact totals, promotions, stale-result removal, safe labels, private save/import/export, extra options and mobile layout')
         finally: server.shutdown()

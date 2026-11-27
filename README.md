@@ -4,7 +4,7 @@ A private browser calculator for comparing grocery pack sizes and promotions for
 
 <!-- coolcode:guide -->
 Compare two sizes of the same product using your own shelf prices. Basket Math calculates whole packs, checkout cost, unit price and extra quantity, including complete-bundle offers, qualifying per-pack prices and buy-X-get-Y-free deals. Lowest unit price can require a larger purchase. Enter coupon and tax assumptions explicitly; save or export only when you choose. The starting prices are invented examples, not live store prices.
-You can also transcribe actual receipts into a private dated price/package ledger, compare compatible unit prices over time, and export/import the same history in Basket Math or Label Compare. History is saved only on request.
+You can also transcribe actual receipts into a private dated price/package ledger, compare compatible unit prices over time, and export/import the same history in Basket Math or Label Compare. History is saved only on request. Compare laundry detergents by the dose per wash, or pet food by the grams you already feed per day. Each comparison shows cost per use, the whole-package checkout total and what remains.
 <!-- /coolcode:guide -->
 
 ## Use it
@@ -16,6 +16,12 @@ You can also transcribe actual receipts into a private dated price/package ledge
 5. Save locally or export a JSON file to return to the comparison. Saving is explicit, not automatic. Importing a file does not overwrite the saved browser copy until you select Save.
 
 The initial example is a fictional 500 g bag at $3.49 versus a 750 g bag at $4.49, with a two-for-$8 offer. For a 1 kg target, the smaller bags cost less at checkout; the larger bags cost less per 100 g but require buying 1.5 kg. Replace every example price with your own.
+
+## Comparing household products
+
+[Laundry detergent cost per load](https://coolcode.ca/basketmath/laundry-cost-per-load.html) accepts liquids, powders, pods and sheets. Enter a package quantity and the amount you use for the same wash in each option. [Pet food cost per day](https://coolcode.ca/basketmath/pet-food-cost-per-day.html) accepts bag sizes in grams, kilograms, pounds or weight ounces and your daily quantity in grams. The amounts and prices shown at first are illustrative. Enter comparable checkout prices for both alternatives. All calculations run locally; these two forms keep edits in tab memory.
+
+Cost per use is the price of the fraction of a package consumed in a wash or day. Checkout uses the smallest number of whole packages covering the target. Remaining usable product carries forward between packages. Change the two named comparison examples, explanations and allowed units in `web/household-examples.json`; rebuild with `python3 scripts/build.py`. Their stable use-case routes are also listed in the hub catalogue and sitemap.
 
 ## Exact rules and limitations
 

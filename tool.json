@@ -1,7 +1,7 @@
 {
   "id": "basketmath",
   "title": "Basket Math",
-  "description": "Compare package sizes, unit prices and multi-buy offers for the amount you need.",
+  "description": "Compare grocery deals, laundry detergent cost per load and pet food cost per day. See the price per use and the cost of buying enough whole packages.",
   "category": "money",
   "tags": [
     "unit price",
@@ -9,7 +9,10 @@
     "shopping",
     "coupons",
     "multipacks",
-    "calculator"
+    "calculator",
+    "cost per use",
+    "laundry detergent",
+    "pet food"
   ],
   "icon": "shopping-basket",
   "url": "/basketmath/",

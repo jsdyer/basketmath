@@ -6,3 +6,17 @@
 .task-links a { color: inherit; text-decoration: underline; text-underline-offset: .18em; font: inherit; }
 .task-links a:first-child { font-weight: bold; }
 h1 { overflow-wrap: anywhere; }
+
+.use-page { max-width: 64rem; }
+.use-page .lead { max-width: 65ch; }
+.use-page form { margin: 1.5rem 0 2rem; }
+.use-target { max-width: 14rem; }
+.use-options, .use-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.use-options { margin: 1rem 0; }
+.use-options fieldset { margin: 0; min-width: 0; }
+.use-options legend { font-weight: 700; padding: 0 .4rem; }
+.use-fields label { display: block; }
+.use-fields input, .use-fields select { display: block; margin-top: .35rem; }
+.use-options output { display: grid; margin-top: 1.2rem; padding: .8rem; background: var(--pale); border-radius: .4rem; }
+.use-options output strong { font-size: 1.2rem; }
+@media (max-width: 700px) { .use-options { grid-template-columns: minmax(0, 1fr); } }
