@@ -108,6 +108,15 @@ def main():
                 assert case_page.locator('h1').inner_text() in case_page.title()
                 assert case_page.evaluate('document.documentElement.scrollWidth <= window.innerWidth')
                 # The fictional summary is available without JS. Interactive results follow actual doses.
+                case_page.goto(f'http://127.0.0.1:{server.server_port}/basketmath/compare-egg-carton-prices.html')
+                expect(case_page.locator('#need-unit')).to_have_value('each')
+                expect(case_page.locator('[data-result="0"] .total')).to_contain_text('$4.80')
+                expect(case_page.locator('[data-result="1"] .rate')).to_contain_text('$0.375')
+                case_page.locator('#need-quantity').fill('36')
+                expect(case_page.locator('[data-result="0"] .total')).to_contain_text('$14.40')
+                expect(case_page.locator('[data-result="1"] .total')).to_contain_text('$13.50')
+                case_page.get_by_role('button', name='Load example').click()
+                expect(case_page.locator('#need-quantity')).to_have_value('12')
                 for slug, heading, value in [
                     ('laundry-cost-per-load', 'Laundry Detergent Cost per Load', '$8.40'),
                     ('pet-food-cost-per-day', 'Pet Food Cost per Day', '$18.00'),

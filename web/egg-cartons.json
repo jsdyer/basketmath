@@ -1,0 +1,29 @@
+{
+  "slug": "compare-egg-carton-prices",
+  "title": "Compare 12- and 18-Pack Egg Prices",
+  "description": "At the example prices of $4.80 for 12 and $6.75 for 18, the dozen costs $1.95 less at checkout when you need 12 eggs. The 18-pack costs 37.5 cents per egg versus 40 cents for the dozen. Change the prices and how many eggs you need.",
+  "guide": {
+    "url": "/field-notes/comparing-egg-carton-prices/",
+    "title": "How to find the break-even carton price"
+  },
+  "inputs": {
+    "goal": {
+      "quantity": "12",
+      "unit": "each"
+    },
+    "options": [
+      {
+        "name": "Carton of 12 eggs",
+        "price": "4.80",
+        "quantity": "12",
+        "unit": "each"
+      },
+      {
+        "name": "Carton of 18 eggs",
+        "price": "6.75",
+        "quantity": "18",
+        "unit": "each"
+      }
+    ]
+  }
+}

@@ -76,20 +76,25 @@ def build(root=ROOT):
             page = page.replace(placeholder, markup if on_coolcode else "")
         if re.search(r"\{\{[A-Z_]+\}\}", page):
             raise ValueError("Unresolved template placeholder in web/index.html")
-        case = json.loads((stage / "use-case.json").read_text(encoding="utf-8"))
-        filename = case["slug"] + ".html"
-        case_tool = {**tool, "title": case["title"], "description": case["description"],
-                     "url": tool["url"] + filename}
-        case_page = re.sub(r"<title>.*?</title>", "<title>" + escape(case["title"]) + " · CoolCode</title>", page, count=1)
-        case_page = re.sub(r"(<h1\b[^>]*>).*?</h1>", lambda match: match[1] + escape(case["title"]) + "</h1>", case_page, count=1, flags=re.S)
-        case_page = case_page.replace('content="' + escape(tool["description"], quote=True) + '"', 'content="' + escape(case["description"], quote=True) + '"', 1)
-        case_page = case_page.replace("<body ", '<body data-use-case="' + escape(case["slug"], quote=True) + '" ', 1)
-        case_links = '<p class="case-description">' + escape(case["description"]) + '</p><p class="task-links"><a href="#need-quantity">Compare package prices</a><a href="./">Open ' + escape(tool["title"]) + '</a></p>'
         household_links = write_household_pages(stage, tool, reporting if on_coolcode else {})
-        case_page = re.sub(r'<p class="task-links" data-task-links>.*?</p>', lambda _: case_links, case_page, count=1)
-        case_page = case_page.replace('<!-- household-comparisons -->', '<nav class="task-links" aria-label="Household calculators">'+household_links+'</nav>')
         page = page.replace('<!-- household-comparisons -->', '<nav class="task-links" aria-label="Household calculators">'+household_links+'</nav>')
-        (stage / filename).write_text(add_search_metadata(case_page, case_tool), encoding="utf-8")
+        for case_file in ("use-case.json", "egg-cartons.json"):
+            case = json.loads((stage / case_file).read_text(encoding="utf-8"))
+            filename = case["slug"] + ".html"
+            case_tool = {**tool, "title": case["title"], "description": case["description"],
+                         "url": tool["url"] + filename}
+            case_page = re.sub(r"<title>.*?</title>", "<title>" + escape(case["title"]) + " · CoolCode</title>", page, count=1)
+            case_page = re.sub(r"(<h1\b[^>]*>).*?</h1>", lambda match: match[1] + escape(case["title"]) + "</h1>", case_page, count=1, flags=re.S)
+            case_page = case_page.replace('content="' + escape(tool["description"], quote=True) + '"', 'content="' + escape(case["description"], quote=True) + '"', 1)
+            case_page = case_page.replace("<body ", '<body data-use-case="' + escape(case["slug"], quote=True) + '" ', 1)
+            case_links = '<p class="case-description">' + escape(case["description"]) + '</p><p class="task-links"><a href="#need-quantity">Compare package prices</a><a href="./">Open ' + escape(tool["title"]) + '</a>'
+            if "guide" in case:
+                guide = case["guide"]
+                case_links += '<a href="' + escape(guide["url"], quote=True) + '">' + escape(guide["title"]) + '</a>'
+            inputs = json.dumps(case["inputs"], ensure_ascii=False).replace("<", "\\u003c")
+            case_links += '</p><script type="application/json" id="case-inputs">' + inputs + '</script>'
+            case_page = re.sub(r'<p class="task-links" data-task-links>.*?</p>', lambda _: case_links, case_page, count=1)
+            (stage / filename).write_text(add_search_metadata(case_page, case_tool), encoding="utf-8")
         page = add_search_metadata(page, tool)
         index.write_text(page, encoding="utf-8")
         (stage / ".nojekyll").touch()

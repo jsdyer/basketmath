@@ -1,13 +1,16 @@
 import {UNITS,sample,newOption,validateState,calculate,validateGoal,money,formatDecimal,amountIn,compare} from './model.mjs';
 const $=id=>document.getElementById(id),KEY='coolcode:basketmath:comparison';
-let state=sample();
-if (document.body.dataset.useCase === 'buy-two-get-one-free') {
-  state.goal.quantity = '1.2';
-  state.options = [
-    {...newOption(1), name:'500 g regular price', price:'3.90', quantity:'500'},
-    {...newOption(2), name:'400 g buy two, get one free', price:'3', quantity:'400', deal:'bogo', buy:'2', free:'1'}
-  ];
+function startingComparison() {
+  const state = sample();
+  const preset = document.getElementById('case-inputs');
+  if (preset) {
+    const inputs = JSON.parse(preset.textContent);
+    Object.assign(state.goal, inputs.goal);
+    state.options = inputs.options.map((row, i) => ({...newOption(i + 1), ...row}));
+  }
+  return state;
 }
+let state = startingComparison();
 const el=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
 const units=()=>Object.entries(UNITS).map(([value,u])=>[value,u.label]);
 function options(select,list,value){for(const [v,label] of list){const o=el('option',label);o.value=v;select.append(o);}select.value=value;}
@@ -87,7 +90,7 @@ function render(){
 }
 function status(message){$('storage-status').textContent=message;}
 $('add').addEventListener('click',()=>{if(state.options.length>=100)return;const row=newOption(state.options.length+1);row.unit=state.goal.unit;state.options.push(row);renderOptions();changed();$('options').lastElementChild.querySelector('input').focus();});
-$('sample').addEventListener('click',()=>{state=sample();$('sample-notice').hidden=false;render();status('Loaded invented example prices. Your saved comparison was not changed.');});
+$('sample').addEventListener('click',()=>{state=startingComparison();$('sample-notice').hidden=false;render();status('Loaded invented example prices. Your saved comparison was not changed.');});
 $('blank').addEventListener('click',()=>{state={version:1,goal:{quantity:'1',unit:'kg',tax:'0',taxBasis:'after',allowExtra:true,takeFree:true},options:[newOption(1),newOption(2)]};$('sample-notice').hidden=true;render();status('Started an empty comparison. Your saved comparison was not changed.');});
 $('save').addEventListener('click',()=>{try{localStorage.setItem(KEY,JSON.stringify(state));status('Saved on this device. Later edits are not saved until you select Save again.');}catch{status('Browser storage is unavailable. Export a JSON file instead.');}});
 $('load').addEventListener('click',()=>{try{const saved=localStorage.getItem(KEY);if(!saved)return status('No comparison saved in this browser.');state=validateState(JSON.parse(saved));$('sample-notice').hidden=true;render();status('Loaded the saved comparison.');}catch(e){status('Could not load: '+e.message);}});

@@ -84,6 +84,8 @@ Use the new history form to transcribe actual purchase records: comparison group
 
 History is retained only on explicit Save, using `coolcode:basketmath:receipt-history:v1`. Load, remove, clear, export and import are separate actions; removal from the current session does not overwrite stored history until saved. The JSON schema `coolcode-receipt-history-v1` is interoperable between Basket Math and Label Compare, validates up to 5,000 records and merges by record ID. This local history requires no API, key, schedule or Worker change.
 
-## Ready-to-use example
+## Ready-to-use examples
 
 [Is Buy Two, Get One Free the Better Grocery Deal?](https://coolcode.ca/basketmath/buy-two-get-one-free.html) opens this scenario in the same tool. Compare a 500 g pack for $3.90 with a 400 g pack for $3 on a buy-two-get-one-free offer. The example calls for 1.2 kg. Check both the amount paid at checkout and the amount left over, then change the prices on the shelf.
+
+The [egg carton calculator](https://coolcode.ca/basketmath/compare-egg-carton-prices.html) compares 12- and 18-packs at illustrative shelf prices. Change the number of eggs needed to see the checkout cost and spare eggs for each size. The [worked guide](https://coolcode.ca/field-notes/comparing-egg-carton-prices/) includes a published Canadian price and a break-even calculation.
