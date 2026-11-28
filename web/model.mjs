@@ -40,6 +40,12 @@ export function quantity(value,unit,label='Quantity') {
   if(unit==='each'&&a.d!==1n)throw Error(label+' in items must be a whole number.');
   return mul(a,UNITS[unit].factor);
 }
+// Shelf rates use the full package price and quantity, before promotions or whole-pack targets.
+export function shelfUnitPrice(price, size, unit) {
+  const contents = quantity(size, unit, 'Package size');
+  const basis = {mass: 100n, volume: 1000n, count: 1n}[UNITS[unit].kind];
+  return div(rational(cents(price) * basis, 100n), contents);
+}
 export function amountIn(base,unit){return div(base,UNITS[unit].factor);}
 export function validateGoal(goal) {
   const required=quantity(goal.quantity,goal.unit,'Amount needed');

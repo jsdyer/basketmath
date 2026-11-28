@@ -3,9 +3,11 @@
 A private browser calculator for comparing grocery pack sizes and promotions for the amount you need. [Open Basket Math](https://coolcode.ca/basketmath/).
 
 <!-- coolcode:guide -->
-Compare two sizes of the same product using your own shelf prices. Basket Math calculates whole packs, checkout cost, unit price and extra quantity, including complete-bundle offers, qualifying per-pack prices and buy-X-get-Y-free deals. Lowest unit price can require a larger purchase. Enter coupon and tax assumptions explicitly; save or export only when you choose. The starting prices are invented examples, not live store prices.
+For a quick shelf comparison, enter two or three prices and sizes to find the cost per 100 g, litre or sheet. Use the grocery deal planner when a promotion or required quantity affects the checkout total. Basket Math calculates whole packs, checkout cost, unit price and extra quantity, including complete-bundle offers, qualifying per-pack prices and buy-X-get-Y-free deals. Lowest unit price can require a larger purchase. Enter coupon and tax assumptions explicitly; save or export only when you choose. The starting prices are invented examples, not live store prices.
 You can also transcribe actual receipts into a private dated price/package ledger, compare compatible unit prices over time, and export/import the same history in Basket Math or Label Compare. History is saved only on request. Compare laundry detergents by the dose per wash, or pet food by the grams you already feed per day. Each comparison shows cost per use, the whole-package checkout total and what remains.
 <!-- /coolcode:guide -->
+
+[Quick unit price comparison](https://coolcode.ca/basketmath/unit-price.html) handles different weight or volume units for the same item and whole sheet counts. Enter the total shelf price for each package. Equal rates share the win. The quick calculator keeps figures only in this tab.
 
 ## Use it
 

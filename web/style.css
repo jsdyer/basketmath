@@ -20,3 +20,9 @@ h1 { overflow-wrap: anywhere; }
 .use-options output { display: grid; margin-top: 1.2rem; padding: .8rem; background: var(--pale); border-radius: .4rem; }
 .use-options output strong { font-size: 1.2rem; }
 @media (max-width: 700px) { .use-options { grid-template-columns: minmax(0, 1fr); } }
+
+.shelf-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1rem; }
+.shelf-options fieldset { min-width: 0; margin: 0; }
+.shelf-options legend { padding: 0 .3rem; font-weight: 700; }
+.shelf-rate { display: block; margin-top: .75rem; font-weight: 600; }
+.shelf-result { padding: 1rem; background: var(--pale); border-radius: .4rem; }

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {calculate,compare,decimal,rational,quantity,amountIn,cents,money,formatDecimal,validateState,sample} from '../web/model.mjs';
+import {calculate,compare,decimal,rational,quantity,amountIn,cents,money,formatDecimal,validateState,sample,shelfUnitPrice} from '../web/model.mjs';
 const goal=(extra={})=>({quantity:'1',unit:'kg',tax:'0',taxBasis:'after',allowExtra:true,takeFree:true,...extra});
 const option=(extra={})=>({id:'x',name:'Item',price:'3.49',quantity:'500',unit:'g',inner:'1',deal:'regular',dealCount:'2',dealPrice:'',buy:'1',free:'1',coupon:'0',couponScope:'none',...extra});
 test('whole retail packs satisfy the target and preserve exact surplus',()=>{
@@ -89,4 +89,14 @@ test('saved comparisons round-trip and accept more than the starter options',()=
 test('coupon-funded extra paid packs are never labelled BOGO freebies',()=>{
  const o=option({quantity:'1',unit:'each',price:'1',deal:'bogo',buy:'2',free:'2',couponScope:'order',coupon:'2'});
  const x=calculate(o,goal({quantity:'1',unit:'each'}));assert.equal(x.count,1n);assert.equal(x.freeIncluded,0n);assert.equal(x.samePriceExtra,0n);assert.equal(x.total,0n);
+});
+
+test('shelf prices use exact rates per 100 g, litre or individual sheet', () => {
+  assert.deepEqual(shelfUnitPrice('4.50','750','g'), shelfUnitPrice('6.00','1','kg'));
+  assert.deepEqual(shelfUnitPrice('1.50','500','mL'), rational(3n));
+  assert.deepEqual(shelfUnitPrice('4.50','1.5','L'), rational(3n));
+  assert.deepEqual(shelfUnitPrice('3.00','480','each'), rational(1n,160n));
+  assert.deepEqual(shelfUnitPrice('0','40','each'), rational(0n));
+  assert.throws(() => shelfUnitPrice('3.00','0','L'), /greater than zero/);
+  assert.throws(() => shelfUnitPrice('3.00','1.5','each'), /whole number/);
 });

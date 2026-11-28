@@ -95,6 +95,14 @@ def build(root=ROOT):
             case_links += '</p><script type="application/json" id="case-inputs">' + inputs + '</script>'
             case_page = re.sub(r'<p class="task-links" data-task-links>.*?</p>', lambda _: case_links, case_page, count=1)
             (stage / filename).write_text(add_search_metadata(case_page, case_tool), encoding="utf-8")
+        shelf = stage / "unit-price.html"
+        shelf_page = shelf.read_text(encoding="utf-8")
+        for placeholder, markup in reporting.items():
+            shelf_page = shelf_page.replace(placeholder, markup if on_coolcode else "")
+        shelf_tool = {**tool, "title": "Compare Package Prices per 100 g, Litre or Sheet",
+                      "description": "Compare up to three grocery or household packages by price per 100 g, litre or sheet.",
+                      "url": tool["url"] + shelf.name}
+        shelf.write_text(add_search_metadata(shelf_page, shelf_tool), encoding="utf-8")
         page = add_search_metadata(page, tool)
         index.write_text(page, encoding="utf-8")
         (stage / ".nojekyll").touch()

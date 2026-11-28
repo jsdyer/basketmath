@@ -38,6 +38,7 @@ def write_household_pages(stage, tool, reporting):
 <body data-tool="{escape(tool["id"])}"><header><a class="brand" href="./">Basket Math</a>
 <a href="https://coolcode.ca/">CoolCode.ca</a></header><main class="use-page">
 <h1>{title}</h1><p class="lead">{desc}</p>
+<p class="hint" data-coolcode-commitments>No CoolCode account · No ads · <a href="/about/#our-commitments">How CoolCode works</a></p>
 <form id="use-comparison" data-use="{use}" hidden>
 <label class="use-target">How many {use}s?<input name="target" value="{target}" inputmode="numeric" maxlength="7"></label>
 <p>{escape(case["dose_hint"])}</p><p class="hint">Edit the example prices and sizes. Your figures stay in this tab. Enter comparable prices including any taxes you want to count.</p>

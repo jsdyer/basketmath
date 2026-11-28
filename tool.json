@@ -1,7 +1,7 @@
 {
   "id": "basketmath",
   "title": "Basket Math",
-  "description": "Compare grocery deals, laundry detergent cost per load and pet food cost per day. See the price per use and the cost of buying enough whole packages.",
+  "description": "Compare up to three packages per 100 g, litre or sheet, or check grocery deals, laundry cost per wash and pet food cost per day.",
   "category": "money",
   "tags": [
     "unit price",

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Compare Package Prices per 100 g, Litre or Sheet · Basket Math</title>
+  <meta name="description" content="Compare up to three grocery or household packages by price per 100 g, litre or sheet. Enter the prices and sizes from the shelf.">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body data-tool="basketmath">
+<header><a href="./" class="brand">Basket Math</a><a href="https://coolcode.ca/">CoolCode.ca</a></header>
+<main class="use-page">
+  <h1>Which package costs less per unit?</h1>
+  <p class="lead">Enter the shelf price and total size for two or three packages of the same product.</p>
+  <p class="hint" data-coolcode-commitments>No CoolCode account · No ads · <a href="/about/#our-commitments">How CoolCode works</a></p>
+  <p class="hint">The prices you enter stay in this tab.</p>
+  <form id="shelf-compare" hidden>
+    <label class="use-target">Compare by
+      <select id="basis">
+        <option value="mass">Weight · per 100 g</option>
+        <option value="volume">Volume · per litre</option>
+        <option value="sheets">Sheet count · per sheet</option>
+      </select>
+    </label>
+    <div id="packages" class="shelf-options"></div>
+    <p class="shelf-result" id="verdict" role="status">Enter two packages to compare.</p>
+  </form>
+  <template id="package-fields">
+    <fieldset class="panel"><legend></legend>
+      <div class="use-fields">
+        <label>Price ($)<input name="price" inputmode="decimal" maxlength="15" autocomplete="off"></label>
+        <label>Package size<input name="size" inputmode="decimal" maxlength="17" autocomplete="off"></label>
+        <label>Size unit<select name="unit"></select></label>
+      </div>
+      <output class="shelf-rate"></output>
+    </fieldset>
+  </template>
+  <section>
+    <h2>How to read a unit price</h2>
+    <p>Divide the price by the total quantity in the package. For example, at $4.50 for 750 g the cost is $0.60 per 100 g. A 500 g bag for $3.50 costs $0.70 per 100 g, so the 750 g bag saves $0.10 for every 100 g you use.</p>
+    <p>For rolls or boxes, use the total sheet count. Six rolls with 80 sheets each contain 480 sheets. Compare products with similar sheet sizes and ply.</p>
+    <noscript><p>Enable JavaScript to compare your own packages.</p></noscript>
+  </section>
+  <nav class="task-links" aria-label="Related calculators"><a href="./">Compare whole packs, coupons and multibuy offers</a><a href="./laundry-cost-per-load.html">Compare detergent per wash</a></nav>
+</main>
+<footer><nav><a href="https://coolcode.ca/">CoolCode.ca</a>{{ISSUE_LINK}}</nav></footer>
+<script type="module" src="./shelf-compare.mjs"></script>{{VISIT_COUNTER}}
+</body>
+</html>
